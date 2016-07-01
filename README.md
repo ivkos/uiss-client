@@ -48,5 +48,48 @@ UissClient
     });
 ```
 
+## Документация на UissClient
+#### static Promise\<UissClient\> login(egn, facultyId)
+Създава нова сесия в УИСС като се логва с подадените ЕГН (`egn`) и факултетен номер (`facultyId`). Връща `Promise<UissClient>` с инстанция на `UissClient` за текущата сесия.
+
+> Вижте [документацията на Promise в MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) и примерите по-горе за това как се използва `Promise`.
+
+#### Promise\<Student\> getStudent()
+Извлича информацията за студента от текущата сесия. Връща `Promise<Student>`. Обектът `Student` е с подобна на тази структура:
+```
+Student {
+  _name: 'XXXXXXXXXXXXXX',
+  _facultyId: 'XXXXXXXX',
+  _facultyName: 'XXXXXXXXXXXXXXXXXXXXX',
+  _major: 'XXXXXXXXXXXXXX',
+  _degreeType: 'Редовно',
+  _email: 'XXXXXX@gmail.com',
+  _status: '$12Действащ',
+  _semester: 6,
+  _completedSemester: 6,
+  _stream: N,
+  _group: NN }
+```
+
+#### Promise\<Grade[]\> getGrades()
+Извлича оценките на студента. Връща `Promise<Grade[]>` с масив от `Grade`. Обектът `Grade` е с подобна на тази структура:
+```
+ Grade {
+    _gradeId: 44,
+    _name: 'ПРОГРАМНИ СРЕДИ',
+    _semesterId: 6,
+    _controlForm: 'Изпит',
+    _gradeText: 'мн.добър',
+    _gradeNumeric: 5,
+    _lastUpdate:
+     { ... }
+```
+Полето `lastUpdate` е от тип `Moment`.
+
+> Вижте [документацията на Moment.js](http://momentjs.com/docs/) и примерите по-горе за това как се използва `Moment`.
+
+#### Promise logout()
+Прекратява текущата сесия.
+
 ## Лиценз
 `uiss-client` е свободен софтуер и се разпространява под [лиценза MIT](/LICENSE).
