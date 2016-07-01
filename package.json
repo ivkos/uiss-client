@@ -1,0 +1,33 @@
+{
+  "name": "uiss-client",
+  "version": "1.0.0",
+  "description": "UISS Client",
+  "main": "src/index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivkos/uiss-client.git"
+  },
+  "keywords": [
+    "uiss",
+    "technical",
+    "university",
+    "tu",
+    "sofia",
+    "rest",
+    "restful",
+    "api"
+  ],
+  "author": "Ivaylo Stoyanov <me@ivkos.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivkos/uiss-client/issues"
+  },
+  "homepage": "https://github.com/ivkos/uiss-client#readme",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "moment": "^2.13.0",
+    "request-promise": "^3.0.0"
+  }
+}
