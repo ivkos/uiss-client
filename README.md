@@ -23,7 +23,8 @@ UissClient
         return session.getStudent()
             .then(student => console.log(student))
             .then(() => session.logout());
-    });
+    })
+    .catch(err => console.error(err));
     
 ```
 
@@ -42,7 +43,8 @@ UissClient
                 
                 console.log(latest);
             })
-            .then(() => session.logout());
+            .then(() => session.logout())
+            .catch(err => console.error(err));
     });
 ```
 
