@@ -1,4 +1,10 @@
-# uiss-client
+uiss-client
+=============
+[![npm](https://img.shields.io/npm/v/uiss-client.svg?maxAge=2592000)](https://www.npmjs.com/package/uiss-client)
+[![npm](https://img.shields.io/npm/dt/uiss-client.svg?maxAge=2592000)](https://www.npmjs.com/package/uiss-client)
+[![npm](https://img.shields.io/npm/l/uiss-client.svg?maxAge=2592000)]()
+
+[![NPM](https://nodei.co/npm/uiss-client.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/uiss-client)
 
 ## Описание
 `uiss-client` е node.js клиент за [УИСС](http://student.tu-sofia.bg) на Технически университет - София, позволяващ автоматизиране на проверката на оценки и получаване на информация за студент.
