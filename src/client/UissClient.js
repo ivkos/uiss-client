@@ -7,7 +7,7 @@ const UissDatabaseException = require('../exceptions/UissDatabaseException');
 const InvalidLoginException = require('../exceptions/InvalidLoginException');
 const ParseException = require('../exceptions/ParseException');
 
-const USER_AGENT = "UISS Client (https://github.com/ivkos/uiss-client)";
+const USER_AGENT = "UISS Client";
 
 module.exports = class UissClient {
     constructor(cookieJar) {
