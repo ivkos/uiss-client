@@ -92,6 +92,26 @@ Student {
 
 > Вижте [документацията на Moment.js](http://momentjs.com/docs/) и примерите по-горе за това как се използва `Moment`.
 
+#### Promise\<Cert[]\> getCerts()
+Извлича заверките на студента. Връща `Promise<Cert[]>` с масив от `Cert`. Обектът `Cert` има подобна на следната 
+структура:
+
+```
+Cert {
+  _signatures: 
+   { lectures: EmptySignature { _signeeName: 'Незаверен', _date: moment.invalid(/* NaN */) },
+     seminars: undefined,
+     labs: 
+      Signature {
+        _signeeName: 'гл. ас. д-р ТАШЕВА',
+        _date: moment("2017-01-11T00:00:00.000") },
+     practice: undefined,
+     project: undefined },
+  _certId: 55,
+  _subjectName: 'ПРОГРАМИРАНЕ ЗА РАЗПРЕДЕЛЕНИ СРЕДИ',
+  _semesterId: 7 }
+```
+
 #### Promise logout()
 Прекратява текущата сесия.
 

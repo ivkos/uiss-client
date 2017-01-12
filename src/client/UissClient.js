@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const Urls = require('./support/Urls');
 const StudentInformationPageParser = require('./page-parsers/StudentInformationPageParser');
 const GradesPageParser = require('./page-parsers/GradesPageParser');
+const CertsPageParser = require('./page-parsers/CertsPageParser');
 const UissDatabaseException = require('../exceptions/UissDatabaseException');
 const InvalidLoginException = require('../exceptions/InvalidLoginException');
 const ParseException = require('../exceptions/ParseException');
@@ -33,6 +34,13 @@ module.exports = class UissClient {
      */
     getGrades() {
         return this.request.get(Urls.URL_MARKS).then(GradesPageParser.parse);
+    }
+
+    /**
+     * @returns {Promise.<Cert[]>}
+     */
+    getCerts() {
+        return this.request.get(Urls.URL_CERTS).then(CertsPageParser.parse);
     }
 
     /**
