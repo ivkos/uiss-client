@@ -1,6 +1,7 @@
 const moment = require('moment');
 
-module.exports = class AbstractSignature {
+module.exports = class AbstractSignature
+{
     constructor(signeeName, date) {
         this.signeeName = signeeName;
         this.date = date;

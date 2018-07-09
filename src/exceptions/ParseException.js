@@ -1,2 +1,3 @@
-module.exports = class ParseException extends Error {
+module.exports = class ParseException extends Error
+{
 };

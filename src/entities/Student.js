@@ -1,4 +1,5 @@
-module.exports = class Student {
+module.exports = class Student
+{
     /**
      * @returns {string}
      */

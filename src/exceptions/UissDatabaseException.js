@@ -1,2 +1,3 @@
-module.exports = class UissDatabaseException extends Error {
+module.exports = class UissDatabaseException extends Error
+{
 };

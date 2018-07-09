@@ -1,4 +1,5 @@
-module.exports = class Grade {
+module.exports = class Grade
+{
     /**
      * @returns {number}
      */

@@ -1,2 +1,3 @@
-module.exports = class InvalidLoginException extends Error {
+module.exports = class InvalidLoginException extends Error
+{
 };

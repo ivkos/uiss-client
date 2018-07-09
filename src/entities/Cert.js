@@ -1,7 +1,8 @@
 const Signature = require('./Signature');
 const EmptySignature = require('./EmptySignature');
 
-module.exports = class Cert {
+module.exports = class Cert
+{
     constructor() {
         /**
          * @type {{lectures, seminars, labs, practice, project}}
