@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "UISS Client",
   "main": "src/index.js",
-  "scripts": {},
+  "scripts": { },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ivkos/uiss-client.git"
@@ -28,5 +28,8 @@
     "cheerio": "^0.20.0",
     "moment": "^2.13.0",
     "request-promise": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

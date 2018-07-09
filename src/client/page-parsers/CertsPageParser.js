@@ -4,53 +4,51 @@ const Signature = require('../../entities/Signature');
 const EmptySignature = require('../../entities/EmptySignature');
 const ParseException = require('../../exceptions/ParseException');
 
-module.exports = class CertsPageParser {
+module.exports = class CertsPageParser
+{
     /**
      * @param $
-     * @returns {Promise.<Cert[]>}
+     * @returns {Cert[]}
      */
     static parse($) {
         const semesterSubtitles = $('.subtitle', '.list_table').parent();
 
-        return new Promise((resolve, reject) => {
-            const certs = [];
+        const certs = [];
 
-            semesterSubtitles.each((i, e) => {
-                const current = $(e);
-                const next = $(semesterSubtitles[i + 1]);
+        semesterSubtitles.each((i, e) => {
+            const current = $(e);
+            const next = $(semesterSubtitles[i + 1]);
 
-                const semesterMatches = current.text().trim().match(/^Семестър (\d+)$/);
-                if (semesterMatches == null) {
-                    reject(new ParseException("Could not parse certs for semester: " + current.text()));
-                    return false; // will stop the each() loop
-                }
+            const semesterMatches = current.text().trim().match(/^Семестър (\d+)$/);
+            if (semesterMatches == null) {
+                throw new ParseException("Could not parse certs for semester: " + current.text());
+            }
 
-                const semesterId = semesterMatches[1];
+            const semesterId = semesterMatches[1];
 
-                current.nextUntil(next).each((i, e) => {
-                    const fields = $('td', $(e)).map((i, e) => $(e).text().trim());
+            current.nextUntil(next).each((i, e) => {
+                const fields = $('td', $(e)).map((i, e) => $(e).text().trim());
 
-                    const theCert = new Cert();
+                const theCert = new Cert();
 
-                    theCert.certId = parseInt(fields[0]);
-                    theCert.subjectName = fields[1];
-                    theCert.semesterId = parseInt(semesterId);
+                theCert.certId = parseInt(fields[0]);
+                theCert.subjectName = fields[1];
+                theCert.semesterId = parseInt(semesterId);
 
-                    [
-                        theCert.lecturesSignature,
-                        theCert.seminarsSignature,
-                        theCert.labsSignature,
-                        theCert.practiceSignature,
-                        theCert.projectSignature
-                    ] = fields.slice(2, 7).get().map(s => CertsPageParser.parseSignature(s));
+                [
+                    theCert.lecturesSignature,
+                    theCert.seminarsSignature,
+                    theCert.labsSignature,
+                    theCert.practiceSignature,
+                    theCert.projectSignature
+                ] = fields.slice(2, 7).get().map(s => CertsPageParser.parseSignature(s));
 
 
-                    return certs.push(theCert);
-                })
-            });
-
-            return resolve(certs);
+                return certs.push(theCert);
+            })
         });
+
+        return certs;
     }
 
     /**
@@ -58,9 +56,9 @@ module.exports = class CertsPageParser {
      * @returns {Signature|undefined}
      */
     static parseSignature(text) {
-        if (text == "-") return undefined;
+        if (text === "-") return undefined;
 
-        if (text == "Не") return new EmptySignature();
+        if (text === "Не") return new EmptySignature();
 
         const matches = text.match(/^(.+), (\d{2}\.\d{2}\.\d{4})$/i);
 

@@ -10,7 +10,8 @@ const ParseException = require('../exceptions/ParseException');
 
 const USER_AGENT = "UISS Client";
 
-module.exports = class UissClient {
+module.exports = class UissClient
+{
     constructor(cookieJar) {
         this.request = rp.defaults({
             jar: cookieJar,
@@ -23,42 +24,20 @@ module.exports = class UissClient {
     }
 
     /**
-     * @returns {Promise.<Student>}
-     */
-    getStudent() {
-        return this.request.get(Urls.URL_INFO).then(StudentInformationPageParser.parse);
-    }
-
-    /**
-     * @returns {Promise.<Grade[]>}
-     */
-    getGrades() {
-        return this.request.get(Urls.URL_MARKS).then(GradesPageParser.parse);
-    }
-
-    /**
-     * @returns {Promise.<Cert[]>}
-     */
-    getCerts() {
-        return this.request.get(Urls.URL_CERTS).then(CertsPageParser.parse);
-    }
-
-    /**
-     * @returns {Promise.<$>}
-     */
-    logout() {
-        return this.request.get(Urls.URL_LOGOUT);
-    }
-
-    /**
      * @param egn
      * @param facultyId
      * @returns {Promise.<UissClient>}
      */
-    static login(egn, facultyId) {
+    static async login(egn, facultyId) {
         const jar = rp.jar();
 
-        return rp.post({
+        // populate cookies
+        await rp.get({
+            url: Urls.URL_BASE,
+            jar: jar
+        });
+
+        const response = await rp.post({
             url: Urls.URL_BASE,
 
             jar: jar,
@@ -76,22 +55,50 @@ module.exports = class UissClient {
             headers: {
                 "User-Agent": USER_AGENT
             }
-        }).then(response => {
-            const body = response.body;
-
-            if (body.includes("Няма връзка с базата от данни.")) {
-                return Promise.reject(new UissDatabaseException())
-            }
-
-            if (body.includes("Студент с въведеното ЕГН и/или факултетен номер")) {
-                return Promise.reject(new InvalidLoginException("Invalid egn or facultyId"));
-            }
-
-            if (!body.includes(Urls.URL_LOGOUT)) {
-                return Promise.reject(new ParseException("Could not login"))
-            }
-
-            return Promise.resolve(new UissClient(jar));
         });
+
+        const body = response.body;
+
+        if (body.includes("Няма връзка с базата от данни.")) {
+            return Promise.reject(new UissDatabaseException())
+        }
+
+        if (body.includes("Студент с въведеното ЕГН и/или факултетен номер")) {
+            return Promise.reject(new InvalidLoginException("Invalid egn or facultyId"));
+        }
+
+        if (!body.includes(Urls.URL_LOGOUT)) {
+            return Promise.reject(new ParseException("Could not login"))
+        }
+
+        return new UissClient(jar);
+    }
+
+    /**
+     * @returns {Promise.<Student>}
+     */
+    async getStudent() {
+        return StudentInformationPageParser.parse(await this.request.get(Urls.URL_INFO));
+    }
+
+    /**
+     * @returns {Promise.<Grade[]>}
+     */
+    async getGrades() {
+        return GradesPageParser.parse(await this.request.get(Urls.URL_MARKS));
+    }
+
+    /**
+     * @returns {Promise.<Cert[]>}
+     */
+    async getCerts() {
+        return CertsPageParser.parse(await this.request.get(Urls.URL_CERTS));
+    }
+
+    /**
+     * @returns {Promise.<$>}
+     */
+    async logout() {
+        return this.request.get(Urls.URL_LOGOUT);
     }
 };
