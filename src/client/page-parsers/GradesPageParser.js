@@ -58,7 +58,9 @@ module.exports = class GradesPageParser
                 theGrade.gradeText = gradeDescriptionMatches[1];
                 theGrade.gradeNumeric = parseInt(gradeDescriptionMatches[2]);
 
-                theGrade.lastUpdate = moment(fields[4], "DD.MM.YYYY");
+                if (fields[4] !== undefined) {
+                    theGrade.lastUpdate = moment(fields[4], "DD.MM.YYYY");
+                }
 
                 return grades.push(theGrade);
             })
